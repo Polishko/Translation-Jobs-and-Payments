@@ -1,3 +1,5 @@
+--Use this procedure to add a purchase order for a project when the order is ready
+
 CREATE OR REPLACE PROCEDURE fn_add_purchase_order(project_name VARCHAR, new_order_code TEXT)
 AS $$
     BEGIN
@@ -6,4 +8,8 @@ AS $$
     END
 $$
 LANGUAGE plpgsql;
+
+-- call the procedure as follows, EXAMPLE:
+
+CALL fn_add_purchase_order('156_BCP Manual TR', '#PTRIC084732');
 
