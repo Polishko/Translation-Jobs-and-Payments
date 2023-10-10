@@ -5,4 +5,5 @@ I will be using this database to track open and closed projects, payment orders,
 
 Current status: database creation
 
-![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/2b02458d-0597-496a-9979-b2d5eca36f6d)
+![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/95a14e94-a47e-434c-b919-1df9edf7ee0a)
+
