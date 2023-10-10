@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS projects(
   low_fuzzy INT NOT NULL,
   high_fuzzy INT NOT NULL,
   no_match INT NOT NULL,
+  price NUMERIC,
   CONSTRAINT fk_projects_accounts
     FOREIGN KEY(account_id)
         REFERENCES accounts(id)
