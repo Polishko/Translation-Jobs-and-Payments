@@ -19,7 +19,7 @@ CREATE VIEW projects_without_po AS(
 );
 
 /*2. OPEN PROJECTS
-This view can be used to track projects that are not delivered yet and their delivery due dates.*/
+This view can be used to track open projects and their delivery due dates.*/
 
 DROP VIEW IF EXISTS open_projects;
 CREATE VIEW open_projects AS(
