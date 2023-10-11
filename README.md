@@ -8,6 +8,7 @@ Current status: Information for each table, all functions, procedures and trigge
 Short-term goals: 
 - Adding views/joined tables to handle most common tasks (some views were added and more can be added as necessary).
 - Adding a table to store monthly total payment for comparison reasons.
+- Adding a function to calculate expected total payment for a month (for completed projects).
 
 Long-term goals: 
 - Adding information about project managers and setting an email trigger to remind them about any missing, overdue purchase orders.
