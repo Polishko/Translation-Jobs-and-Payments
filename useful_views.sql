@@ -18,5 +18,17 @@ CREATE VIEW projects_without_po AS(
     ORDER BY pr.end_date
 );
 
+/*2. OPEN PROJECTS
+This view can be used to track projects that are not delivered yet and their delivery due dates.*/
+
+DROP VIEW IF EXISTS open_projects;
+CREATE VIEW open_projects AS(
+    SELECT
+        name,
+        TO_CHAR(end_date, 'DD Month HH24:MI') AS "due date"
+    FROM
+        projects
+    WHERE delivered_status = FALSE
+);
 
 
