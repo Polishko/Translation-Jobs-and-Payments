@@ -39,3 +39,21 @@ LANGUAGE plpgsql;
 
 CALL sp_add_purchase_order('156_BCP Manual TR', 'PTRIC084732');
 
+/*3. FUNCTION FOR PROJECT PRICE CALCULATION
+The following function is used to calculate price for project by using data such as project type, no match and fuzzy segments as well as information from the rate_percentages table.*/
+
+CREATE OR REPLACE FUNCTION fn_calculate_price_for_project(type_id INT, lf INT, hf INT, nm INT)
+RETURNS NUMERIC
+AS $$
+    DECLARE
+        final_price NUMERIC;
+        main_rate NUMERIC := (SELECT main_rate FROM job_types WHERE id = type_id);
+        rate_percent_nm NUMERIC := (SELECT percent_of_full_rate FROM rate_percentages WHERE id = 1);
+        rate_percent_lf NUMERIC := (SELECT percent_of_full_rate FROM rate_percentages WHERE id = 2);
+        rate_percent_hf NUMERIC := (SELECT percent_of_full_rate FROM rate_percentages WHERE id = 3);
+    BEGIN
+        final_price = (nm * rate_percent_nm + lf * rate_percent_lf + hf * rate_percent_hf) * main_rate/100;
+    RETURN final_price;
+    END
+$$
+LANGUAGE plpgsql;
