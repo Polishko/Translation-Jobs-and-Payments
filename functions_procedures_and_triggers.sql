@@ -57,3 +57,46 @@ AS $$
     END
 $$
 LANGUAGE plpgsql;
+
+/*4. FUNCTION AND TRIGGER USED TO SET THE PAYMENT DUE DATE IN THE PAYMENTS TABLE
+The trigger is activated when a project is added to the projects table and automatically sets the payment due date in the payments table based on project end date.*/
+
+
+CREATE OR REPLACE FUNCTION fn_set_payment_due_date()
+RETURNS TRIGGER
+AS $$
+    BEGIN
+        INSERT INTO payments(date_due, date_paid, project_id)
+        VALUES
+            (NEW.end_date + INTERVAL '30 Days', NULL, NEW.id);
+    RETURN NEW;
+    END
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_add_payment_due_date
+AFTER INSERT ON projects
+FOR EACH ROW
+EXECUTE FUNCTION fn_set_payment_due_date();
+
+/*5. FUNCTION AND TRIGGER USED TO SET THE PAYMENT DATE IN THE PAYMENTS TABLE
+When the status of a project is changed as True upon payment, the below trigger automatically sets the payment_date in the payments table as the date when the status change is made.*/
+
+CREATE OR REPLACE FUNCTION fn_set_payment_date()
+RETURNS TRIGGER
+AS $$
+    BEGIN
+    IF NEW.status_paid = TRUE THEN
+        UPDATE payments
+        SET date_paid = (SELECT CURRENT_TIMESTAMP)
+        WHERE payments.project_id = NEW.id;
+    END IF;
+    RETURN NEW;
+    END
+ $$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER set_payment_date
+AFTER UPDATE OF status_paid ON projects
+FOR EACH ROW
+EXECUTE FUNCTION fn_set_payment_due_date();
