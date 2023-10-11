@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS accounts(
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100)
+    name VARCHAR(100),
+    code VARCHAR(5)
 );
 
 CREATE TABLE IF NOT EXISTS job_types(
