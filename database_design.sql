@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS purchase_orders(
   id SERIAL PRIMARY KEY,
   project_id INT NOT NULL CHECK (project_id > 0),
   time_created TIMESTAMP,
-  order_code TEXT,
+  order_code TEXT UNIQUE,
   CONSTRAINT fk_purchase_orders_projects
     FOREIGN KEY(project_id)
         REFERENCES projects(id)
