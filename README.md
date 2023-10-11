@@ -3,9 +3,10 @@ a database used to manage my translation jobs and their payments
 
 I will be using this database to track open and closed projects, payment orders, payment due dates and statuses.
 
-Current status: the necessary functions, procedures and triggers were added. The ERD for database was updated with current version.
+Current status: Information for each table, all functions, procedures and triggers and the database design.
 
-![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/9b15a082-aae5-4a7d-92a7-eb5693e4b5cc)
+![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/13829a9f-60a3-46da-a8cb-8a354cbe5894)
+
 
 Example outputs
 
