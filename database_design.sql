@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS projects(
   high_fuzzy INT NOT NULL,
   no_match INT NOT NULL,
   price NUMERIC,
+  delivered_status BOOL DEFAULT FALSE,
   CONSTRAINT fk_projects_accounts
     FOREIGN KEY(account_id)
         REFERENCES accounts(id)
