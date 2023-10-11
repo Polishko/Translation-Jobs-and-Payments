@@ -39,8 +39,9 @@ LANGUAGE plpgsql;
 
 CALL sp_add_purchase_order('156_BCP Manual TR', 'PTRIC084732');
 
-/*3. FUNCTION FOR PROJECT PRICE CALCULATION
-The following function is used to calculate price for project by using data such as project type, no match and fuzzy segments as well as information from the rate_percentages table.*/
+/*3. FUNCTION FOR PROJECT PRICE CALCULATION AND PROCEDURE FOR INSERTION INFORMATION TO PROJECTS TABLE
+The following function is used to calculate price for project by using data such as project type, no match and fuzzy segments as well as information from the rate_percentages table.
+Then the procedure that follows is used to enter new values in the table*/
 
 CREATE OR REPLACE FUNCTION fn_calculate_price_for_project(type_id INT, lf INT, hf INT, nm INT)
 RETURNS NUMERIC
@@ -57,6 +58,35 @@ AS $$
     END
 $$
 LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURE sp_insert_project_into_projects_table(
+    project_name VARCHAR,
+    project_end TEXT,
+    account_name VARCHAR,
+    type_name VARCHAR,
+    low INT,
+    high INT,
+    nomatch INT    )
+AS $$
+    BEGIN
+        INSERT INTO projects(name, start_date, end_date, account_id, job_type_id, low_fuzzy, high_fuzzy, no_match, price)
+        VALUES
+            (project_name,
+            (SELECT CURRENT_TIMESTAMP),
+              project_end::TIMESTAMP,
+            (SELECT id FROM accounts WHERE accounts.name = account_name),
+             (SELECT id FROM job_types WHERE name = type_name),
+             low, high, nomatch,
+             (SELECT fn_calculate_price_for_project(
+                 (SELECT id FROM job_types WHERE name = type_name),
+                 low,
+                 high,
+                 nomatch))
+            );
+    END
+$$
+LANGUAGE plpgsql;
+
 
 /*4. FUNCTION AND TRIGGER USED TO SET THE PAYMENT DUE DATE IN THE PAYMENTS TABLE
 The trigger is activated when a project is added to the projects table and automatically sets the payment due date in the payments table based on project end date.*/
