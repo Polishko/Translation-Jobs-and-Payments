@@ -16,7 +16,8 @@ Long-term goals:
 - Creating means to store information about invoices.
 - Adding a trigger which will change the delivered_status column value in the projects table to true upon delivery of the project on the delivery platform. For the time being this is handled manually.
 
-![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/13829a9f-60a3-46da-a8cb-8a354cbe5894)
+![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/ec59ae04-c6a2-4e6e-9aa0-99ed28375da5)
+
 
 
 Example outputs
