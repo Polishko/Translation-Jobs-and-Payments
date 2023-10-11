@@ -1,4 +1,4 @@
---1. View to check if a certain project that is completed (and not paid) lacks a purchase order. It can be retrieved before the end of the month prior to preparing the necessary invoices.
+--1. A view which is used to check whether a certain project that is completed (and not paid) lacks a purchase order. It can be retrieved before the end of the month, prior to preparing the necessary invoices.
 
 DROP VIEW IF EXISTS projects_without_po;
 CREATE VIEW projects_without_po AS(
@@ -15,4 +15,6 @@ CREATE VIEW projects_without_po AS(
       AND po.id IS NULL
     ORDER BY pr.end_date
 );
+
+
 
