@@ -1,0 +1,8 @@
+/*This table contains the purchase orders that are prepared for projects and is used to track whether project orders are prepared on time for already delivered projects.
+The procedure sp_add_purchase_order is used to populate the table when a project is created (See functions, procedures and triggers file)*/
+
+
+-- call the procedure as follows to populate the table:
+
+CALL fn_add_purchase_order('156_BCP Manual TR', 'PTRIC084732');
+
