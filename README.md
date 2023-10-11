@@ -1,9 +1,13 @@
 # Translation-Jobs-and-Payments
-a database used to manage my translation jobs and their payments
+This database will be used to manage my translation jobs and their purchase orders and payments.
 
 I will be using this database to track open and closed projects, payment orders, payment due dates and statuses.
 
 Current status: Information for each table, all functions, procedures and triggers and the database design.
+
+Short-term goals: Adding views/joined tables to handle most common tasks.
+
+Long-term goals: Adding information on project managers and setting email trigger to remind them about missing, overdue purchase orders.
 
 ![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/13829a9f-60a3-46da-a8cb-8a354cbe5894)
 
