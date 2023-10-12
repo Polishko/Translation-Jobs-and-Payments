@@ -59,6 +59,7 @@ AS $$
 $$
 LANGUAGE plpgsql;
 
+
 CREATE OR REPLACE PROCEDURE sp_insert_project_into_projects_table(
     project_name VARCHAR,
     project_end TEXT,
@@ -71,11 +72,11 @@ AS $$
     BEGIN
         INSERT INTO projects(name, start_date, end_date, account_id, job_type_id, low_fuzzy, high_fuzzy, no_match, price)
         VALUES
-            (project_name,
-            (SELECT CURRENT_TIMESTAMP),
-              project_end::TIMESTAMP,
-            (SELECT id FROM accounts WHERE accounts.name = account_name),
-             (SELECT id FROM job_types WHERE name = type_name),
+            (INITCAP(project_name),
+            (CURRENT_TIMESTAMP),
+             (TO_TIMESTAMP(project_end, 'DD.MM.YYYY, HH24:MI:SS')),
+            (SELECT id FROM accounts WHERE accounts.name = INITCAP(account_name)),
+             (SELECT id FROM job_types WHERE name = INITCAP(type_name)),
              low, high, nomatch,
              (SELECT fn_calculate_price_for_project(
                  (SELECT id FROM job_types WHERE name = type_name),
@@ -86,7 +87,6 @@ AS $$
     END
 $$
 LANGUAGE plpgsql;
-
 
 /*4. FUNCTION AND TRIGGER USED TO SET THE PAYMENT DUE DATE IN THE PAYMENTS TABLE
 The trigger is activated when a project is added to the projects table and automatically sets the payment due date in the payments table based on project end date.*/
