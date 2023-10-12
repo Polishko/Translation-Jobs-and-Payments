@@ -59,7 +59,6 @@ AS $$
 $$
 LANGUAGE plpgsql;
 
-
 CREATE OR REPLACE PROCEDURE sp_insert_project_into_projects_table(
     project_name VARCHAR,
     project_end TEXT,
@@ -73,8 +72,8 @@ AS $$
         INSERT INTO projects(name, start_date, end_date, account_id, job_type_id, low_fuzzy, high_fuzzy, no_match, price)
         VALUES
             (INITCAP(project_name),
-            (CURRENT_TIMESTAMP),
-             (TO_TIMESTAMP(project_end, 'DD.MM.YYYY, HH24:MI:SS')),
+            CURRENT_TIMESTAMP,
+             TO_TIMESTAMP(project_end, 'DD.MM.YYYY, HH24:MI:SS'),
             (SELECT id FROM accounts WHERE accounts.name = INITCAP(account_name)),
              (SELECT id FROM job_types WHERE name = INITCAP(type_name)),
              low, high, nomatch,
