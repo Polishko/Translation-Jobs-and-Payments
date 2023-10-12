@@ -71,7 +71,7 @@ AS $$
     BEGIN
         INSERT INTO projects(name, start_date, end_date, account_id, job_type_id, low_fuzzy, high_fuzzy, no_match, price)
         VALUES
-            (INITCAP(project_name),
+            (project_name,
             CURRENT_TIMESTAMP,
              TO_TIMESTAMP(project_end, 'DD.MM.YYYY, HH24:MI:SS'),
             (SELECT id FROM accounts WHERE accounts.name = INITCAP(account_name)),
