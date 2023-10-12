@@ -30,7 +30,7 @@ CREATE OR REPLACE PROCEDURE sp_add_purchase_order(project_name VARCHAR, new_orde
 AS $$
     BEGIN
         INSERT INTO purchase_orders(project_id, time_created, order_code)
-        VALUES ((SELECT id FROM projects WHERE name = project_name), (SELECT CURRENT_TIMESTAMP), new_order_code);
+        VALUES ((SELECT id FROM projects WHERE name = INITCAP(project_name)), (SELECT CURRENT_TIMESTAMP), new_order_code);
     END
 $$
 LANGUAGE plpgsql;
