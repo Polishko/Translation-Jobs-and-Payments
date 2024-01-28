@@ -3,7 +3,7 @@
   The purpose of this evolving project is to create a platform for freelance professionals where they can manage their projects. Currently it is mainly focused on my own translation and review projects (English to Turkish).
 
   # Technologies:
-  Initially I used PostgreSQL to create a database and several procedures, functions and triggers. Then I added an Email Scraper that collectes certain relevant information from my email account.
+  Initially I used PostgreSQL to create a database and several procedures, functions and triggers. Then I added an Email Scraper that collects certain relevant information from my email account.
 
   # Current status:
     Managing my translation jobs and their purchase orders and payments, tracking open and closed projects, payment orders, payment due dates and statuses.
