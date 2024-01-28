@@ -15,27 +15,25 @@
   write the code I got help from ChatGPT and the web page https://www.datacourses.com/, especially on using the email library of Python, while I also contributed with my knowledge on functions, regex, error handling and file handling. The scraper avoids the reply 
   emails and collects the relevant information only once.
 
-  # Example views:
+ # DB structure and example PostgreSQL outputs
 
-    # DB structure and example PostgreSQL outputs
+ ![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/ec59ae04-c6a2-4e6e-9aa0-99ed28375da5)
+    
+  projects table with calculated price based on job_type, rate_percentages, no match and fuzzy inputs 
+    
+  ![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/3725e773-433a-490e-8122-5c0dd9ae2f39)
+    
+  current purchase orders
+  
+  ![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/e4ab53a0-0aa8-4f3d-8c45-499f6de3019d)
+    
+  table showing payment status
+    
+  ![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/061490a4-a10f-4433-afe9-6c185f1e72a8)
+ 
+  # Example Email Scraper output
 
-    ![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/ec59ae04-c6a2-4e6e-9aa0-99ed28375da5)
-    
-    projects table with calculated price based on job_type, rate_percentages, no match and fuzzy inputs 
-    
-    ![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/3725e773-433a-490e-8122-5c0dd9ae2f39)
-    
-    current purchase orders
-    
-    ![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/e4ab53a0-0aa8-4f3d-8c45-499f6de3019d)
-    
-    table showing payment status
-    
-    ![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/061490a4-a10f-4433-afe9-6c185f1e72a8)
-
-    # Example Email Scraper output
-
-    ![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/0c5ca198-06ad-4962-aad1-c22f26375127)
+  ![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/0c5ca198-06ad-4962-aad1-c22f26375127)
 
 
 
