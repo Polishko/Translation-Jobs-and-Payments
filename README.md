@@ -1,26 +1,17 @@
 # Translation-Jobs-and-Payments
-This database will be used to manage my translation jobs and their purchase orders and payments.
+The purpose of this evolving project is to create a platform for freelance professionals where they can manage their projects. Currently it is mainly focused on my own translation and review projects (English to Turkish).
 
-I will be using this database to track open and closed projects, payment orders, payment due dates and statuses.
+Initially I used PostgreSQL to create a database and several procedures, functions and triggers. Then I added an Email Scraper that collectes certain relevant information from my email account.
 
-Current status: Information for each table, all functions, procedures and triggers and the database design is present.
+Current purpose: To manage my translation jobs and their purchase orders and payments, tracking open and closed projects, payment orders, payment due dates and statuses.
 
-Short-term goals: 
-- Adding views/joined tables to handle most common tasks (some views were added and more can be added as necessary).
-- Adding a table to store monthly total payment for comparison reasons.
-- Adding a function to calculate expected total payment for a month (for completed projects).
+Details: 
+  PostgreSQL: Detailed information on each table and function, procedure can be found in the PostgreSQL folder.
+  Email Scraper: This code allows the user to enter a certain date and extract certain information from an email that is sent from a given domain. The relevant information is then stored in a notepad file. For writing the code I got help from ChatGPT and the web     page https://www.datacourses.com/ especially on using the email library of Python while also using my knowledge of functions, regex, error handling and file handling. The scraper avoids reply emails and collects the relevant information only once.
 
-Long-term goals: 
-- Adding information about project managers and setting an email trigger to remind them about any missing, overdue purchase orders.
-- Creating a user friendly interface where translators can easily manage their own projects by simply entering the necessary information in the provided fields.
-- Creating means to store information about invoices.
-- Adding a trigger which will change the delivered_status column value in the projects table to true upon delivery of the project on the delivery platform. For the time being this is handled manually.
+DB structure and example PostgreSQL outputsa
 
 ![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/ec59ae04-c6a2-4e6e-9aa0-99ed28375da5)
-
-
-
-Example outputs
 
 projects table with calculated price based on job_type, rate_percentages, no match and fuzzy inputs 
 
@@ -33,6 +24,11 @@ current purchase orders
 table showing payment status
 
 ![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/061490a4-a10f-4433-afe9-6c185f1e72a8)
+
+Example Email Scraper output
+
+![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/0c5ca198-06ad-4962-aad1-c22f26375127)
+
 
 
 
