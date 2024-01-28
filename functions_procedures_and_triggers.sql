@@ -1,5 +1,6 @@
 /*1. TRIGGER TO UPDATE REVIEW MAIN RATE
-The following trigger updates the main rate of the 'Review' job type by %25 of the 'Translation' main rate, each time the Translation rate is updated.*/
+The purpose of this trigger is to update review rate accordingly when the translator declares an increase in their transdlation rate. Since the review rate is defined as 25% of the translation rate, the trigger
+updates the main rate of the 'Review' job type by %25 of the 'Translation' main rate, each time the Translation rate is updated.*/
 
 CREATE OR REPLACE FUNCTION fn_calculate_review_rate()
 RETURNS TRIGGER AS $$
@@ -40,8 +41,8 @@ LANGUAGE plpgsql;
 CALL sp_add_purchase_order('156_BCP Manual TR', 'PTRIC084732');
 
 /*3. FUNCTION FOR PROJECT PRICE CALCULATION AND PROCEDURE FOR INSERTION INFORMATION TO PROJECTS TABLE
-The following function is used to calculate price for project by using data such as project type, no match and fuzzy segments as well as information from the rate_percentages table.
-Then the procedure that follows is used to enter new values in the table*/
+The following function is used to calculate the price for the project by using data such as project type, no match (nm) and fuzzy segments (lf and hf) as well as information from the rate_percentages table.
+Afterwards, a procedure is used to enter the new project information together with the calculated price value in the projects table*/
 
 CREATE OR REPLACE FUNCTION fn_calculate_price_for_project(type_id INT, lf INT, hf INT, nm INT)
 RETURNS NUMERIC
@@ -109,7 +110,8 @@ FOR EACH ROW
 EXECUTE FUNCTION fn_set_payment_due_date();
 
 /*5. FUNCTION AND TRIGGER USED TO SET THE PAYMENT DATE IN THE PAYMENTS TABLE
-When the status of a project is changed as True upon payment, the below trigger automatically sets the payment_date in the payments table as the date when the status change is made.*/
+This function is used to enter the date when the payment is made to the payments table. When the status of a project payment is changed as True upon payment, the below trigger automatically sets the payment_date
+in the payments table as the date when the status change is made.*/
 
 CREATE OR REPLACE FUNCTION fn_set_payment_date()
 RETURNS TRIGGER
