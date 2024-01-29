@@ -128,7 +128,7 @@ def process_emails():
             m.logout()
 
     if extracted_info_list:
-        file_path = os.path.join(os.path.dirname(os.getcwd()), "extracted_info.txt")
+        file_path = os.path.join(os.path.dirname(os.getcwd()), f"{input_date}.txt")
 
         with open(file_path, "w", encoding="utf-8") as file:
             for email_info in extracted_info_list:
