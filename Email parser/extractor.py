@@ -7,13 +7,10 @@ from datetime import datetime
 
 
 def details(domain_info, date):
-    if not date:
-        date = datetime.now().strftime("%d-%b-%Y")
-    else:
-        try:
-            date = datetime.strptime(date, "%d-%m-%Y").strftime("%d-%b-%Y")
-        except ValueError:
-            return None
+    try:
+        date = datetime.strptime(date, "%d-%m-%Y").strftime("%d-%b-%Y")
+    except ValueError:
+        return None
 
     search_criteria = f'(FROM "@{domain_info}" ON {date})'
     return search_criteria
@@ -23,7 +20,7 @@ def extract_info(mail):
     sender = mail["From"]
     subject = mail["Subject"]
     due_date_line = None
-    
+
     if not re.search(r're:', subject, flags=re.IGNORECASE):
         for part in mail.walk():
             if part.get_content_maintype() == 'text':
@@ -41,14 +38,14 @@ def extract_info(mail):
                             due_date_line = relevant_lines[0]
                     else:
                         due_date_line = relevant_lines[0]
-                        
+
                     match = re.search(r'(\d+(.)+)', due_date_line)
                     if match:
                         due_date_line = match.group(1)
 
                     break
 
-        sender_email = re.search(r'<([^>]+)>', sender).group(1)\
+        sender_email = re.search(r'<([^>]+)>', sender).group(1) \
             if re.search(r'<([^>]+)>', sender) else sender
 
         if due_date_line:
@@ -97,16 +94,19 @@ def process_emails():
 
             input_date = input("Enter date (format: DD-MM-YYYY), press Enter for today: ")
 
-            try:
-                input_date_obj = datetime.strptime(input_date, "%d-%m-%Y")
-                today_date_obj = datetime.now()
+            if not input_date:
+                input_date = datetime.now().strftime("%d-%m-%Y")
+            else:
+                try:
+                    input_date_obj = datetime.strptime(input_date, "%d-%m-%Y")
+                    today_date_obj = datetime.now()
 
-                if input_date_obj > today_date_obj:
-                    print("Please enter a date that is not in the future.")
+                    if input_date_obj > today_date_obj:
+                        print("Please enter a date that is not in the future.")
+                        continue
+                except ValueError:
+                    print("Invalid date format. Please use the format DD-MM-YYYY.")
                     continue
-            except ValueError:
-                print("Invalid date format. Please use the format DD-MM-YYYY.")
-                continue
 
             search_criteria = details(domain_info, input_date)
 
@@ -116,7 +116,7 @@ def process_emails():
                 print("Invalid input. Please try again.")
 
         resp, items = m.search(None, search_criteria)
-        items = items[0].split() # a list of mail ids
+        items = items[0].split()  # a list of mail ids
 
         extracted_info_list = process_email_list(items, m)
 
