@@ -8,7 +8,7 @@ from datetime import datetime
 
 def details(domain_info, date):
     try:
-        date = datetime.strptime(date, "%d-%m-%Y").strftime("%d-%b-%Y")
+        date = datetime.strptime(date, '%d-%m-%Y').strftime('%d-%b-%Y')
     except ValueError:
         return None
 
@@ -17,14 +17,14 @@ def details(domain_info, date):
 
 
 def extract_info(mail):
-    sender = mail["From"]
-    subject = mail["Subject"]
+    sender = mail['From']
+    subject = mail['Subject']
     due_date_line = None
 
     if not re.search(r're:', subject, flags=re.IGNORECASE):
         for part in mail.walk():
             if part.get_content_maintype() == 'text':
-                email_body = part.get_payload(decode=True).decode("utf-8")
+                email_body = part.get_payload(decode=True).decode('utf-8')
                 lines = email_body.split('\n')
 
                 relevant_lines = [line.strip() for line in lines if re.search(
@@ -58,7 +58,7 @@ def process_email_list(items, m):
     extracted_info_list = []
 
     for email_id in items:
-        resp, data = m.fetch(email_id, "(RFC822)")
+        resp, data = m.fetch(email_id, '(RFC822)')
         email_body = data[0][1]
         mail = email.message_from_bytes(email_body)
 
@@ -68,9 +68,9 @@ def process_email_list(items, m):
             sender, subject, due_date_info = extracted_info
 
             email_info = {
-                "Sender": sender,
-                "Subject": subject,
-                "Due date info": due_date_info
+                'Sender': sender,
+                'Subject': subject,
+                'Due date info': due_date_info
             }
 
             extracted_info_list.append(email_info)
@@ -92,20 +92,20 @@ def process_emails():
             m.login(un, pw)
             m.select()
 
-            input_date = input("Enter date (format: DD-MM-YYYY), press Enter for today: ")
+            input_date = input('Enter date (format: DD-MM-YYYY), press Enter for today: ')
 
             if not input_date:
-                input_date = datetime.now().strftime("%d-%m-%Y")
+                input_date = datetime.now().strftime('%d-%m-%Y')
             else:
                 try:
-                    input_date_obj = datetime.strptime(input_date, "%d-%m-%Y")
+                    input_date_obj = datetime.strptime(input_date, '%d-%m-%Y')
                     today_date_obj = datetime.now()
 
                     if input_date_obj > today_date_obj:
-                        print("Please enter a date that is not in the future.")
+                        print('Please enter a date that is not in the future.')
                         continue
                 except ValueError:
-                    print("Invalid date format. Please use the format DD-MM-YYYY.")
+                    print('Invalid date format. Please use the format DD-MM-YYYY.')
                     continue
 
             search_criteria = details(domain_info, input_date)
@@ -113,7 +113,7 @@ def process_emails():
             if search_criteria is not None:
                 break
             else:
-                print("Invalid input. Please try again.")
+                print('Invalid input. Please try again.')
 
         resp, items = m.search(None, search_criteria)
         items = items[0].split()  # a list of mail ids
@@ -121,21 +121,24 @@ def process_emails():
         extracted_info_list = process_email_list(items, m)
 
     except Exception as e:
-        print(f"Error: {e}")
+        print(f'Error: {e}')
 
     finally:
         if m is not None:
             m.logout()
 
-    if extracted_info_list:
-        file_path = os.path.join(os.path.dirname(os.getcwd()), f"{input_date}.txt")
+    if not extracted_info_list:
+        print(f'No jobs assigned on {input_date}.')
+        return
 
-        with open(file_path, "w", encoding="utf-8") as file:
-            for email_info in extracted_info_list:
-                file.write(f"Sender: {email_info['Sender']}\n")
-                file.write(f"Subject: {email_info['Subject']}\n")
-                file.write(f"Due date info: {email_info['Due date info']}\n")
-                file.write("\n")
+    file_path = os.path.join(os.path.dirname(os.getcwd()), f'{input_date}.txt')
+
+    with open(file_path, 'w', encoding='utf-8') as file:
+        for email_info in extracted_info_list:
+            file.write(f'Sender: {email_info["Sender"]}\n')
+            file.write(f'Subject: {email_info["Subject"]}\n')
+            file.write(f'Due date info: {email_info["Due date info"]}\n')
+            file.write('\n')
 
 
 if __name__ == "__main__":
