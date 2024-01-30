@@ -3,7 +3,7 @@ import imaplib
 import email
 import os
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def details(domain_info, date):
@@ -41,7 +41,11 @@ def extract_info(mail):
 
                     match = re.search(r'(\d+(.)+)', due_date_line)
                     if match:
-                        due_date_line = match.group(1)
+                        if 'yarın' in due_date_line.lower():
+                            due_date_line = (f'{(datetime.now() + timedelta(days=1)).strftime("%d.%m.%Y")}'
+                                             f' {match.group(1)}')
+                        else:
+                            due_date_line = match.group(1)
 
                     break
 
