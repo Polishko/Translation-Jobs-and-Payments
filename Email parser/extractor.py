@@ -28,7 +28,7 @@ def extract_info(mail):
                 lines = email_body.split('\n')
 
                 relevant_lines = [line.strip() for line in lines if re.search(
-                    r'teslim:|teslim tarihi:', line, flags=re.IGNORECASE | re.UNICODE)]
+                    r'teslim|teslim tarihi', line, flags=re.IGNORECASE | re.UNICODE)]
 
                 if relevant_lines:
                     if re.search(r'rev', subject, flags=re.IGNORECASE):
