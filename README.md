@@ -11,11 +11,9 @@
 
   # Details: 
   PostgreSQL: Detailed information on each table and function, procedure can be found in the PostgreSQL folder.
-  Email Scraper: This code allows the user to enter a certain date and extract certain information (sender, subject, due date) from emails that are sent on that fdate from a given domain. The relevant information is then stored in a notepad file. In order to     
-  write the code I got help from ChatGPT and the web page https://www.datacourses.com/, especially on using the email library of Python, while I also contributed with my knowledge on functions, regex, error handling and file handling. The scraper avoids the reply 
-  emails and collects the relevant information only once.
+  Email Scraper: This code allows the user to enter a certain date and extract certain information (sender, subject, due date) from emails that are sent on that fdate from a given domain. The relevant information is then stored in a notepad file. I used the web page      https://www.datacourses.com/ for reference for the application of the email library of Python and also made use of regex. The scraper avoids the reply emails and collects the relevant information only once.
 
- # DB structure and example PostgreSQL outputs
+  # DB structure and example PostgreSQL outputs
 
  ![image](https://github.com/Polishko/Translation-Jobs-and-Payments/assets/119063181/ec59ae04-c6a2-4e6e-9aa0-99ed28375da5)
     
