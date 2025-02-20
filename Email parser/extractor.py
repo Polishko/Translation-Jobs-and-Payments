@@ -1,3 +1,15 @@
+"""
+Connects to Gmail’s IMAP server, searches for emails from a specific domain on a given date,
+extracts due date information, and saves it to a text file.
+"""
+
+"""
+imaplib: Library for working with email servers using the IMAP (Internet Message Access Protocol).
+
+It allows the script to connect to an email inbox, search for emails, read their content, and fetch details.
+Unlike POP3, IMAP doesn’t download emails; it just reads them directly from the server.
+"""
+
 from email_details import EMAIL_UN, EMAIL_PW, domain
 import imaplib
 import email
@@ -8,7 +20,7 @@ from datetime import datetime, timedelta
 
 def details(domain_info, date):
     try:
-        date = datetime.strptime(date, '%d-%m-%Y').strftime('%d-%b-%Y')
+        date = datetime.strptime(date, '%d-%m-%Y').strftime('%d-%b-%Y') # str date to datetime obj, then to IMAP required str format
     except ValueError:
         return None
 
@@ -16,24 +28,24 @@ def details(domain_info, date):
     return search_criteria
 
 
-def extract_info(mail):
+def extract_info(mail): # mail is an email.message.EmailMessage object from Python’s email module and behaves like a dictionary.
     sender = mail['From']
     subject = mail['Subject']
     due_date_line = None
 
-    if not re.search(r're:', subject, flags=re.IGNORECASE):
+    if not re.search(r're:', subject, flags=re.IGNORECASE): # ignore reply emails
         for part in mail.walk():
             if part.get_content_maintype() == 'text':
-                email_body = part.get_payload(decode=True).decode('utf-8')
+                email_body = part.get_payload(decode=True).decode('utf-8') # extracts raw encoded content and decodes to eadable UTF-8 string
                 lines = email_body.split('\n')
 
                 relevant_lines = [line.strip() for line in lines if re.search(
-                    r'teslim|teslim tarihi', line, flags=re.IGNORECASE | re.UNICODE)]
+                    r'teslim|teslim tarihi', line, flags=re.IGNORECASE | re.UNICODE)] # teslim/teslim tarihi: delivery/delivery date in Turkish
 
                 if relevant_lines:
-                    if re.search(r'rev', subject, flags=re.IGNORECASE):
+                    if re.search(r'rev', subject, flags=re.IGNORECASE): # if review date, then due date is the review date
                         if len(relevant_lines) > 1:
-                            due_date_line = relevant_lines[1]
+                            due_date_line = relevant_lines[1] # line 0 is the  translation delivery date
                         else:
                             due_date_line = relevant_lines[0]
                     else:
@@ -41,7 +53,7 @@ def extract_info(mail):
 
                     match = re.search(r'(\d+(.)+)', due_date_line)
                     if match:
-                        if 'yarın' in due_date_line.lower():
+                        if 'yarın' in due_date_line.lower(): # yarin = tomorrow in Turkish
                             due_date_line = (f'{(datetime.now() + timedelta(days=1)).strftime("%d.%m.%Y")}'
                                              f' {match.group(1)}')
                         else:
@@ -92,9 +104,9 @@ def process_emails():
 
     try:
         while True:
-            m = imaplib.IMAP4_SSL(url, 993)
-            m.login(un, pw)
-            m.select()
+            m = imaplib.IMAP4_SSL(url, 993) # IMAP connection obj, Connect to Gmail's IMAP server (SSL for security)
+            m.login(un, pw) # Log in using credentials
+            m.select()  # Select the inbox (default is "INBOX")
 
             input_date = input('Enter date (format: DD-MM-YYYY), press Enter for today: ')
 
@@ -120,7 +132,7 @@ def process_emails():
                 print('Invalid input. Please try again.')
 
         resp, items = m.search(None, search_criteria)
-        items = items[0].split()  # a list of mail ids
+        items = items[0].split()  # a list of email ids
 
         extracted_info_list = process_email_list(items, m)
 
