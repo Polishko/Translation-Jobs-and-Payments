@@ -109,7 +109,7 @@ AFTER INSERT ON projects
 FOR EACH ROW
 EXECUTE FUNCTION fn_set_payment_due_date();
 
-/*5. FUNCTION AND TRIGGER USED TO SET THE PAYMENT DATE IN THE PAYMENTS TABLE
+/*5. FUNCTION AND TRIGGER USED TO SET THE ACTUAL PAYMENT REALIZATION DATE IN THE PAYMENTS TABLE
 This function is used to enter the date when the payment is made to the payments table. When the status of a project payment is changed as True upon payment, the below trigger automatically sets the payment_date
 in the payments table as the date when the status change is made.*/
 
